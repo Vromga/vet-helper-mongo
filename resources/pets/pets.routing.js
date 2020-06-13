@@ -9,7 +9,6 @@ router
   })
   .post(async (req, res) => {
     const pet = new Pet({ ...req.body });
-    console.log(pet);
     try {
       await pet.save();
       res.end();
@@ -18,11 +17,9 @@ router
       res.sendStatus(400).end(e);
     }
   });
-router
-  .route('/:id')
-  .get(async (req, res) => {
-    const pets = await Pet.find({ clientId: req.params.id });
-    await res.status(200).json(pets.map(Pet.toResponse)).end();
-  });
+router.route('/:id').get(async (req, res) => {
+  const pets = await Pet.find({ clientId: req.params.id });
+  await res.status(200).json(pets.map(Pet.toResponse)).end();
+});
 
 module.exports = router;
